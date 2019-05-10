@@ -18,6 +18,6 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 Route.get('auth/instagram', 'LoginController.redirect').as('auth.social')
-Route.get('auth/instagram/callback', 'LoginController.callback').as(
+Route.get('authenticated/instagram', 'LoginController.callback').as(
   'auth.social.callback'
 )
