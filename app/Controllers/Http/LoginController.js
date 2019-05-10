@@ -3,17 +3,59 @@
 const User = use('App/Models/User')
 
 class LoginController {
-  async redirect ({ ally }) {
-    await ally.driver('facebook').redirect()
+  // somente com usando o facebook
+  // async redirect ({ ally }) {
+  //   await ally.driver('facebook').redirect()
+  // }
+
+  // somente com usando o facebook segundo metodo
+  // async callback ({ ally, auth, response }) {
+  //   try {
+  //     const fbUser = await ally.driver('facebook').getUser()
+
+  //     // search for existing user
+  //     const whereClause = {
+  //       email: fbUser.getEmail()
+  //     }
+
+  //     const userDb = await User.find(whereClause)
+  //     if (userDb) {
+  //       await auth.login(userDb)
+  //       return response.redirect('/')
+  //     }
+
+  //     // user details to be saved
+  //     const userDetails = {
+  //       email: fbUser.getEmail(),
+  //       token: fbUser.getAccessToken(),
+  //       provider: 'facebook',
+  //       name: fbUser.getName(),
+  //       username: fbUser.getNickname(),
+  //       provider_id: fbUser.getId(),
+  //       avatar: fbUser.getAvatar()
+  //     }
+
+  //     const user = await User.create(userDetails)
+  //     await auth.login(user)
+  //     return response.redirect('/')
+  //   } catch (error) {
+  //     return 'Incapaz de autenticar. Tente mais tarde'
+  //   }
+  // }
+
+  async redirect ({ ally, params }) {
+    await ally.driver(params.provider).redirect()
   }
 
-  async callback ({ ally, auth, response }) {
+  // login com facebook e instagram
+  async callback ({ params, ally, auth, response }) {
+    const provider = params.provider
     try {
-      const fbUser = await ally.driver('facebook').getUser()
+      const userData = await ally.driver(provider).getUser()
 
       // search for existing user
       const whereClause = {
-        email: fbUser.getEmail()
+        email: userData.getEmail()
       }
 
       const userDb = await User.find(whereClause)
@@ -24,13 +66,13 @@ class LoginController {
 
       // user details to be saved
       const userDetails = {
-        email: fbUser.getEmail(),
-        token: fbUser.getAccessToken(),
-        provider: 'facebook',
-        name: fbUser.getName(),
-        username: fbUser.getNickname(),
-        provider_id: fbUser.getId(),
-        avatar: fbUser.getAvatar()
+        email: userData.getEmail(),
+        token: userData.getAccessToken(),
+        provider: provider,
+        name: userData.getName(),
+        username: userData.getNickname(),
+        provider_id: userData.getId(),
+        avatar: userData.getAvatar()
       }
 
       const user = await User.create(userDetails)

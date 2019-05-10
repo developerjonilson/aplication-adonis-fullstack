@@ -15,6 +15,10 @@
                                 <img src="{{ auth.user.avatar }}">
                                 <h2>{{ auth.user.name }}</h2>
                                 <h5>{{ auth.user.provider }}</h5>
+                                <a href="{{ route('auth.logout') }}"
+                                  class="btn btn-block btn-danger">
+                                  <i class="fa fa-sign-out"></i>Sair
+                                </a>
                             </div>
                         </div>
                     </div>
