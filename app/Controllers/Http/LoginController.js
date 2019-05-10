@@ -1,6 +1,6 @@
 'use strict'
 
-// const User = use('App/Models/User')
+const User = use('App/Models/User')
 
 class LoginController {
   // somente com usando o facebook
@@ -57,14 +57,14 @@ class LoginController {
     try {
       const userData = await ally.driver(provider).getUser()
 
-      return userData
+      const authUser = await User.query()
+        .where({
+          provider: provider,
+          provider_id: userData.getId()
+        })
+        .first()
 
-      // const authUser = await User.query()
-      //   .where({
-      //     provider: provider,
-      //     provider_id: userData.getId()
-      //   })
-      //   .first()
+      return authUser
 
       // if (!(authUser === null)) {
       //   await auth.loginViaId(authUser.id)
