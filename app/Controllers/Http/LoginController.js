@@ -1,6 +1,6 @@
 'use strict'
 
-const User = use('App/Models/User')
+// const User = use('App/Models/User')
 
 class LoginController {
   // somente com usando o facebook
@@ -57,44 +57,46 @@ class LoginController {
     try {
       const userData = await ally.driver(provider).getUser()
 
-      const authUser = await User.query()
-        .where({
-          provider: provider,
-          provider_id: userData.getId()
-        })
-        .first()
-      if (!(authUser === null)) {
-        await auth.loginViaId(authUser.id)
-        return response.redirect('/')
-      } else {
-        if (!(userData.getEmail() === null)) {
-          // search for existing user by email
-          const whereClause = {
-            email: userData.getEmail()
-          }
+      return response.send(userData)
 
-          const userDb = await User.find(whereClause)
-          if (userDb) {
-            await auth.login(userDb)
-            return response.redirect('/')
-          }
+      // const authUser = await User.query()
+      //   .where({
+      //     provider: provider,
+      //     provider_id: userData.getId()
+      //   })
+      //   .first()
+      // if (!(authUser === null)) {
+      //   await auth.loginViaId(authUser.id)
+      //   return response.redirect('/')
+      // } else {
+      //   if (!(userData.getEmail() === null)) {
+      //     // search for existing user by email
+      //     const whereClause = {
+      //       email: userData.getEmail()
+      //     }
 
-          // user details to be saved
-          const userDetails = {
-            email: userData.getEmail(),
-            token: userData.getAccessToken(),
-            provider: provider,
-            name: userData.getName(),
-            username: userData.getNickname(),
-            provider_id: userData.getId(),
-            avatar: userData.getAvatar()
-          }
+      //     const userDb = await User.find(whereClause)
+      //     if (userDb) {
+      //       await auth.login(userDb)
+      //       return response.redirect('/')
+      //     }
 
-          const user = await User.create(userDetails)
-          await auth.login(user)
-          return response.redirect('/')
-        }
-      }
+      //     // user details to be saved
+      //     const userDetails = {
+      //       email: userData.getEmail(),
+      //       token: userData.getAccessToken(),
+      //       provider: provider,
+      //       name: userData.getName(),
+      //       username: userData.getNickname(),
+      //       provider_id: userData.getId(),
+      //       avatar: userData.getAvatar()
+      //     }
+
+      //     const user = await User.create(userDetails)
+      //     await auth.login(user)
+      //     return response.redirect('/')
+      //   }
+      // }
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
