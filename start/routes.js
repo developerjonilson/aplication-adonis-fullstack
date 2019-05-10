@@ -18,7 +18,7 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 Route.get('auth/facebook', 'LoginController.redirect').as('auth.social')
-Route.get('auth/url', 'LoginController.urlRedirect').as('auth.url')
 Route.get('authenticated/facebook', 'LoginController.callback').as(
   'auth.social.callback'
 )
+Route.get('logout', 'LoginController.logout').as('auth.logout')
