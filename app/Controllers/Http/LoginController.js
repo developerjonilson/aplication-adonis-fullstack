@@ -86,7 +86,7 @@ class LoginController {
   async logout ({ auth, response }) {
     await auth.logout()
 
-    response.redirect('/')
+    return response.redirect('/')
   }
 }
 
