@@ -25,17 +25,19 @@
                     <br>
                 </div>
                 @else
-                <div class="card-header">Authentication</div>
+                <div class="card-header">Login</div>
                 <div class="card-body">
                     <div class="container">
                         <div class="row justify-content-md-center">
                             <div class="col col-md-6">
-                                <a href="{{ route('auth.social') }}"
+
+                                <a href="{{ route('auth.social', {provider: 'facebook'}) }}"
                                   class="btn btn-block btn-github btn-social">
-                                  <i class="fa fa-facebook"></i>Login with Facebook
+                                  <i class="fa fa-facebook"></i>Login com Facebook
                                 </a>
-                                <a href="{{ route('auth.social') }}" class="btn btn-block btn-instagram btn-social">
-                                  <i class="fa fa-instagram"></i>Login with Instagram
+                                <a href="{{ route('auth.social', {provider: 'instagram'}) }}"
+                                  class="btn btn-block btn-instagram btn-social">
+                                  <i class="fa fa-instagram"></i>Login com Instagram
                               </a>
                             </div>
                         </div>
