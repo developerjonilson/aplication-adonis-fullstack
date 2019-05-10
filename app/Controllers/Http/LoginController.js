@@ -15,19 +15,18 @@ class LoginController {
 
   async callback ({ ally, auth }) {
     try {
-      const insUser = await ally.driver('facebook').getUser()
+      const fbUser = await ally.driver('facebook').getUser()
 
       // user details to be saved
       const userDetails = {
-        email: insUser.getEmail(),
-        token: insUser.getAccessToken(),
-        avatar: insUser.getAvatar(),
+        email: fbUser.getEmail(),
+        token: fbUser.getAccessToken(),
         login_source: 'facebook'
       }
 
       // search for existing user
       const whereClause = {
-        email: insUser.getEmail()
+        email: fbUser.getEmail()
       }
 
       const user = await User.findOrCreate(whereClause, userDetails)
@@ -37,7 +36,6 @@ class LoginController {
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
-  }
 }
 
 module.exports = LoginController
