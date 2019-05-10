@@ -17,8 +17,11 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
-Route.get('login/facebook', 'LoginController.redirect').as('login.redirect')
-Route.get('facebook/callback', 'LoginController.callback').as('login.callback')
-Route.on('logged')
-  .render('logged')
-  .as('login.logged')
+Route.get('/logout', 'AuthController.logout').as('logout')
+Route.get('/auth/:provider', 'AuthController.redirectToProvider').as(
+  'social.login'
+)
+Route.get(
+  '/authenticated/:provider',
+  'AuthController.handleProviderCallback'
+).as('social.login.callback')
