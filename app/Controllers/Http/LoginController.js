@@ -44,17 +44,16 @@ class LoginController {
   // }
 
   async redirect ({ ally, params }) {
+    if (params.provider === 'admin') {
+      return 'admin user!'
+    }
+
     await ally.driver(params.provider).redirect()
   }
 
   // login com facebook e instagram
   async callback ({ params, ally, auth, response }) {
     const provider = params.provider
-
-    if (provider === 'admin') {
-      return 'admin user!'
-    }
-
     try {
       const userData = await ally.driver(provider).getUser()
 
