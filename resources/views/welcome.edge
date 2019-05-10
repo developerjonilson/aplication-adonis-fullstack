@@ -14,7 +14,7 @@
                             <div class="col col-md-12">
                                 <img src="{{ auth.user.avatar }}">
                                 <h2>{{ auth.user.name }}</h2>
-                                <h5>{{ auth.user.provider }}</h5>
+                                <h5>{{ auth.user.login_source }}</h5>
                             </div>
                         </div>
                     </div>
@@ -26,15 +26,7 @@
                     <div class="container">
                         <div class="row justify-content-md-center">
                             <div class="col col-md-6">
-                                <a href="{{ route('social.login', {provider: 'google'}) }}"
-                                   class="btn btn-block btn-google btn-social">
-                                    <i class="fa fa-google-plus"></i>Login with Google
-                                </a>
-                                <a href="{{ route('social.login', { provider: 'github' }) }}"
-                                   class="btn btn-block btn-github btn-social">
-                                    <i class="fa fa-github"></i>Login with GitHub
-                                </a>
-                                <a href="{{ route('social.login', {provider: 'instagram'}) }}"
+                                <a href="{{ route('login.instagram'}) }}"
                                    class="btn btn-block btn-instagram btn-social">
                                     <i class="fa fa-instagram"></i>Login with Instagram
                                 </a>

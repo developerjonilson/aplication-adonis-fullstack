@@ -20,6 +20,8 @@ class UserSchema extends Schema {
       table.string('avatar').nullable()
       table.string('provider_id').nullable()
       table.string('provider').nullable()
+      table.string('login_source').nullable()
+      table.string('token').nullable()
       table.timestamps()
     })
   }

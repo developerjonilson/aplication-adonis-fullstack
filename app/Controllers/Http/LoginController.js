@@ -4,23 +4,24 @@ const User = use('App/Models/User')
 
 class LoginController {
   async redirect ({ ally }) {
-    await ally.driver('facebook').redirect()
+    await ally.driver('instagram').redirect()
   }
 
   async callback ({ ally, auth }) {
     try {
-      const fbUser = await ally.driver('facebook').getUser()
+      const insUser = await ally.driver('instagram').getUser()
 
       // user details to be saved
       const userDetails = {
-        email: fbUser.getEmail(),
-        token: fbUser.getAccessToken(),
-        login_source: 'facebook'
+        email: insUser.getEmail(),
+        token: insUser.getAccessToken(),
+        avatar: insUser.getAvatar(),
+        login_source: 'instagram'
       }
 
       // search for existing user
       const whereClause = {
-        email: fbUser.getEmail()
+        email: insUser.getEmail()
       }
 
       const user = await User.findOrCreate(whereClause, userDetails)
