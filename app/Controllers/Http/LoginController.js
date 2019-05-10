@@ -19,7 +19,7 @@ class LoginController {
       const userDb = await User.find(whereClause)
       if (userDb) {
         await auth.login(userDb)
-        return 'Logado!'
+        return response.redirect('/')
       }
 
       // user details to be saved
@@ -35,7 +35,7 @@ class LoginController {
 
       const user = await User.create(userDetails)
       await auth.login(user)
-      return 'Logado!'
+      return response.redirect('/')
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
