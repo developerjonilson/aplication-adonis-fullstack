@@ -3,12 +3,6 @@
 const User = use('App/Models/User')
 
 class LoginController {
-  async urlRedirect ({ ally, response }) {
-    const url = await ally.driver('facebook').getRedirectUrl()
-
-    return response.json(url)
-  }
-
   async redirect ({ ally }) {
     await ally.driver('facebook').redirect()
   }
@@ -36,6 +30,7 @@ class LoginController {
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
+  }
 }
 
 module.exports = LoginController
