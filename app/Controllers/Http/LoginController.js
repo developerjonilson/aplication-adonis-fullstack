@@ -63,7 +63,10 @@ class LoginController {
           provider_id: userData.getId()
         })
         .first()
-      return response.send(authUser)
+
+      console.log(authUser)
+
+      return authUser
 
       // if (!(authUser === null)) {
       //   await auth.loginViaId(authUser.id)
