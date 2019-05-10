@@ -57,6 +57,8 @@ class LoginController {
     try {
       const userData = await ally.driver(provider).getUser()
 
+      console.log(userData)
+
       return response.send(userData)
 
       // const authUser = await User.query()
