@@ -33,7 +33,9 @@ class LoginController {
       // await auth.login(user)
 
       // return 'Logado'
-      return response.send(user)
+      console.log(user)
+      return user
+      // return response.send(user)
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
