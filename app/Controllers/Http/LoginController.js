@@ -58,13 +58,6 @@ class LoginController {
         email: userData.getEmail()
       }
 
-      const userDb = await User.find(whereClause)
-      if (userDb) {
-        await auth.login(userDb)
-        return response.redirect('/')
-      }
-
-      // user details to be saved
       const userDetails = {
         email: userData.getEmail(),
         token: userData.getAccessToken(),
@@ -75,9 +68,29 @@ class LoginController {
         avatar: userData.getAvatar()
       }
 
-      const user = await User.create(userDetails)
-      await auth.login(user)
-      return response.redirect('/')
+      const userDb = await User.find(whereClause)
+
+      return response.send(userDetails, userDb)
+
+      // if (userDb) {
+      //   await auth.login(userDb)
+      //   return response.redirect('/')
+      // }
+
+      // // user details to be saved
+      // const userDetails = {
+      //   email: userData.getEmail(),
+      //   token: userData.getAccessToken(),
+      //   provider: provider,
+      //   name: userData.getName(),
+      //   username: userData.getNickname(),
+      //   provider_id: userData.getId(),
+      //   avatar: userData.getAvatar()
+      // }
+
+      // const user = await User.create(userDetails)
+      // await auth.login(user)
+      // return response.redirect('/')
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
