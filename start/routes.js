@@ -17,3 +17,8 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+Route.get('login/facebook', 'LoginController.redirect').as('login.redirect')
+Route.get('facebook/callback', 'LoginController.callback').as('login.callback')
+Route.on('logged')
+  .render('logged')
+  .as('login.logged')
