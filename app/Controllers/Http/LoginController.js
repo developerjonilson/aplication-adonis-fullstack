@@ -7,7 +7,7 @@ class LoginController {
     await ally.driver('facebook').redirect()
   }
 
-  async callback ({ ally, auth }) {
+  async callback ({ ally, auth, response }) {
     try {
       const fbUser = await ally.driver('facebook').getUser()
 
@@ -19,14 +19,15 @@ class LoginController {
       }
 
       // search for existing user
-      const whereClause = {
-        email: fbUser.getEmail()
-      }
+      // const whereClause = {
+      //   email: fbUser.getEmail()
+      // }
 
-      const user = await User.findOrCreate(whereClause, userDetails)
-      await auth.login(user)
+      // const user = await User.findOrCreate(whereClause, userDetails)
+      // await auth.login(user)
 
-      return 'Logado'
+      // return 'Logado'
+      return response.send(userDetails)
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
