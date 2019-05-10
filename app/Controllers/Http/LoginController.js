@@ -19,15 +19,17 @@ class LoginController {
       }
 
       // search for existing user
-      // const whereClause = {
-      //   email: fbUser.getEmail()
-      // }
+      const whereClause = {
+        email: fbUser.getEmail()
+      }
+
+      const userDb = await User.find(whereClause)
 
       // const user = await User.findOrCreate(whereClause, userDetails)
       // await auth.login(user)
 
       // return 'Logado'
-      return response.send(userDetails)
+      return response.send(userDetails, userDb)
     } catch (error) {
       return 'Incapaz de autenticar. Tente mais tarde'
     }
