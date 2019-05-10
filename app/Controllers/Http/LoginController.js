@@ -3,20 +3,26 @@
 const User = use('App/Models/User')
 
 class LoginController {
+  async urlRedirect ({ ally, response }) {
+    const url = await ally.driver('facebook').getRedirectUrl()
+
+    return response.json(url)
+  }
+
   async redirect ({ ally }) {
-    await ally.driver('instagram').redirect()
+    await ally.driver('facebook').redirect()
   }
 
   async callback ({ ally, auth }) {
     try {
-      const insUser = await ally.driver('instagram').getUser()
+      const insUser = await ally.driver('facebook').getUser()
 
       // user details to be saved
       const userDetails = {
         email: insUser.getEmail(),
         token: insUser.getAccessToken(),
         avatar: insUser.getAvatar(),
-        login_source: 'instagram'
+        login_source: 'facebook'
       }
 
       // search for existing user
