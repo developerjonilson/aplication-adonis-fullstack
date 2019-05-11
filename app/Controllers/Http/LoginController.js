@@ -64,7 +64,9 @@ class LoginController {
         })
         .first()
 
-      return authUser
+      return response.send(userData, authUser)
+
+      // return authUser
 
       // if (!(authUser === null)) {
       //   await auth.loginViaId(authUser.id)
