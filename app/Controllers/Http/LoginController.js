@@ -1,7 +1,7 @@
 'use strict'
 
-// const User = use('App/Models/User')
-const Database = use('Database')
+const User = use('App/Models/User')
+// const Database = use('Database')
 
 class LoginController {
   // somente com usando o facebook
