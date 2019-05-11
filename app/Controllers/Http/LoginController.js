@@ -59,12 +59,12 @@ class LoginController {
 
       const authUser = await User.query()
         .where({
-          provider: provider,
+          provider: params.provider,
           provider_id: userData.getId()
         })
         .first()
 
-      return response.send(userData, authUser)
+      return response.send(authUser)
 
       // return authUser
 
