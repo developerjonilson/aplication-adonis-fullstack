@@ -57,6 +57,8 @@ class LoginController {
     try {
       const userData = await ally.driver(provider).getUser()
 
+      const { userId } = userData
+
       // const authUser = await User.query()
       //   .where({
       //     provider: params.provider,
@@ -64,7 +66,7 @@ class LoginController {
       //   })
       //   .first()
 
-      return response.send(userData)
+      return response.send(userId)
 
       // return authUser
 
