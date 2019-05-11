@@ -57,7 +57,16 @@ class LoginController {
     try {
       const userData = await ally.driver(provider).getUser()
 
-      const userId = userData.id
+      // const userId = userData.id
+      const userDetails = {
+        email: userData.getEmail(),
+        token: userData.getAccessToken(),
+        provider: provider,
+        name: userData.getName(),
+        username: userData.getNickname(),
+        provider_id: userData.getId(),
+        avatar: userData.getAvatar()
+      }
 
       // const authUser = await User.query()
       //   .where({
@@ -66,7 +75,7 @@ class LoginController {
       //   })
       //   .first()
 
-      return response.send(userId)
+      return response.send(userDetails)
 
       // return authUser
 
