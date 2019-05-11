@@ -57,7 +57,7 @@ class LoginController {
     try {
       const userData = await ally.driver(provider).getUser()
 
-      const { userId } = userData
+      const userId = userData.id
 
       // const authUser = await User.query()
       //   .where({
