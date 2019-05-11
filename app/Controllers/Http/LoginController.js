@@ -71,7 +71,7 @@ class LoginController {
       .where({ provider_id: idUser })
       .first()
 
-    if (authSaved === null) {
+    if (!authSaved) {
       return 'Usuario não existe no banco'
     }
 
