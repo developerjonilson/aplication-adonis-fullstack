@@ -66,9 +66,9 @@ class LoginController {
         .first()
 
       if (authSaved || authSaved === null) {
-        return 'Usuario já existe no banco é só logar o cara na sessao'
-        //   await auth.loginViaId(authSaved.id)
-        //   return response.redirect('/')
+        // return 'Usuario já existe no banco é só logar o cara na sessao'
+        await auth.loginViaId(authSaved.id)
+        return response.redirect('/')
       } else {
         // user details to be saved
         const userDetails = {
