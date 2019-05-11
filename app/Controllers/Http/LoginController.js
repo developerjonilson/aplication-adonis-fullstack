@@ -71,11 +71,13 @@ class LoginController {
       .where({ provider_id: idUser })
       .first()
 
-    if (!authSaved) {
-      return 'Usuario não existe no banco'
+    if (authSaved || authSaved === null) {
+      return 'Usuario já existe no banco é só logar o cara na sessao'
+    } else {
+      return 'Usuario não existe no banco tem que cadastrar'
     }
 
-    return response.send(whereClause, authSaved)
+    // return response.send(whereClause, authSaved)
 
     // try {
     //   const userData = await ally.driver(provider).getUser()
@@ -107,10 +109,6 @@ class LoginController {
     //   .where('provider', params.provider)
     //   .where('provider_id', userData.getId())
     //   .first()
-
-    // return response.send(authUser)
-
-    // return authUser
 
     // if (!(authUser === null)) {
     //   await auth.loginViaId(authUser.id)
