@@ -59,7 +59,10 @@ class LoginController {
     const userData = await ally.driver(provider).getUser()
     const idUser = userData.getId()
 
-    console.log(idUser)
+    const whereClause = {
+      provider: params.provider,
+      provider_id: idUser
+    }
 
     const authSaved = await Database.from('users')
       .where({ provider: params.provider })
@@ -70,7 +73,7 @@ class LoginController {
     //   .where({ provider_id: idUser })
     //   .first()
 
-    return response.send(userData, authSaved)
+    return response.send(userData, whereClause, authSaved)
 
     // try {
     //   const userData = await ally.driver(provider).getUser()
