@@ -1,7 +1,7 @@
 'use strict'
 
 const User = use('App/Models/User')
-// const Database = use('Database')
+const Database = use('Database')
 
 class LoginController {
   // somente com usando o facebook
@@ -64,14 +64,18 @@ class LoginController {
       provider_id: idUser
     }
 
-    const authSaved = await User.findBy(whereClause)
+    // const authSaved = await User.findBy(whereClause)
+
+    const authSaved = await Database.from('users')
+      .where({ provider: params.provider })
+      .where({ provider_id: idUser })
+      .first()
+
+    if (authSaved === null) {
+      return 'Usuario não existe no banco'
+    }
 
     return response.send(whereClause, authSaved)
-
-    // const authSaved = await Database.from('users')
-    //   .where({ provider: params.provider })
-    //   .where({ provider_id: idUser })
-    //   .first()
 
     // try {
     //   const userData = await ally.driver(provider).getUser()
