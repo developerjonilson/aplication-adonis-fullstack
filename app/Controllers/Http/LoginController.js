@@ -64,16 +64,16 @@ class LoginController {
       provider_id: idUser
     }
 
-    const authSaved = await Database.from('users')
-      .where({ provider: params.provider })
-      .where({ provider_id: idUser })
-      .first()
+    return response.send(whereClause)
+
+    // const authSaved = await Database.from('users')
+    //   .where({ provider: params.provider })
+    //   .where({ provider_id: idUser })
+    //   .first()
     // const authSaved = await User.query()
     //   .where({ provider: params.provider })
     //   .where({ provider_id: idUser })
     //   .first()
-
-    return response.send(userData, whereClause, authSaved)
 
     // try {
     //   const userData = await ally.driver(provider).getUser()
