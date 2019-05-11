@@ -76,9 +76,13 @@ class LoginController {
       //   .first()
       console.log(userData.getId())
 
-      const authUser = await User.query()
-        .where({ provider: params.provider })
-        .where({ provider_id: userData.getId() })
+      // const authUser = await User.query()
+      //   .where({ provider: params.provider })
+      //   .where({ provider_id: userData.getId() })
+      //   .first()
+      const authUser = await Database.from('users')
+        .where('provider', params.provider)
+        .where('provider_id', userData.getId())
         .first()
 
       return response.send(authUser)
