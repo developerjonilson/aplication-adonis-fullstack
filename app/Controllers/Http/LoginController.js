@@ -60,16 +60,16 @@ class LoginController {
 
     console.log(idUser)
 
-    // const authSaved = await Database.from('users')
-    //   .where({ provider: params.provider })
-    //   .where({ provider_id: userData.getId() })
-    //   .first()
-    const authSaved = await User.query()
+    const authSaved = await Database.from('users')
       .where({ provider: params.provider })
       .where({ provider_id: idUser })
       .first()
+    // const authSaved = await User.query()
+    //   .where({ provider: params.provider })
+    //   .where({ provider_id: idUser })
+    //   .first()
 
-    return response.send(authSaved)
+    return response.send(userData, authSaved)
 
     // try {
     //   const userData = await ally.driver(provider).getUser()
