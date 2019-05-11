@@ -1,6 +1,6 @@
 'use strict'
 
-// const User = use('App/Models/User')
+const User = use('App/Models/User')
 
 class LoginController {
   // somente com usando o facebook
@@ -54,76 +54,92 @@ class LoginController {
   // login com facebook e instagram
   async callback ({ params, ally, auth, response }) {
     const provider = params.provider
-    try {
-      const userData = await ally.driver(provider).getUser()
 
-      // const userId = userData.id
-      // const userDetails = {
-      //   email: userData.getEmail(),
-      //   token: userData.getAccessToken(),
-      //   provider: provider,
-      //   name: userData.getName(),
-      //   username: userData.getNickname(),
-      //   provider_id: userData.getId(),
-      //   avatar: userData.getAvatar()
-      // }
+    const userData = await ally.driver(provider).getUser()
 
-      // const authUser = await User.query()
-      //   .where({
-      //     provider: params.provider,
-      //     provider_id: userData.getId()
-      //   })
-      //   .first()
-      console.log(userData.getId())
+    console.log(userData.getId())
 
-      // const authUser = await User.query()
-      //   .where({ provider: params.provider })
-      //   .where({ provider_id: userData.getId() })
-      //   .first()
-      const authUser = await Database.from('users')
-        .where('provider', params.provider)
-        .where('provider_id', userData.getId())
-        .first()
+    // const authSaved = await Database.from('users')
+    //   .where({ provider: params.provider })
+    //   .where({ provider_id: userData.getId() })
+    //   .first()
+    const authSaved = await User.query()
+      .where({ provider: params.provider })
+      .where({ provider_id: userData.getId() })
+      .first()
 
-      return response.send(authUser)
+    return response.send(authSaved)
 
-      // return authUser
+    // try {
+    //   const userData = await ally.driver(provider).getUser()
 
-      // if (!(authUser === null)) {
-      //   await auth.loginViaId(authUser.id)
-      //   return response.redirect('/')
-      // } else {
-      //   if (!(userData.getEmail() === null)) {
-      //     // search for existing user by email
-      //     const whereClause = {
-      //       email: userData.getEmail()
-      //     }
+    // const userId = userData.id
+    // const userDetails = {
+    //   email: userData.getEmail(),
+    //   token: userData.getAccessToken(),
+    //   provider: provider,
+    //   name: userData.getName(),
+    //   username: userData.getNickname(),
+    //   provider_id: userData.getId(),
+    //   avatar: userData.getAvatar()
+    // }
 
-      //     const userDb = await User.find(whereClause)
-      //     if (userDb) {
-      //       await auth.login(userDb)
-      //       return response.redirect('/')
-      //     }
+    // const authUser = await User.query()
+    //   .where({
+    //     provider: params.provider,
+    //     provider_id: userData.getId()
+    //   })
+    //   .first()
+    // console.log(userData.getId())
 
-      //     // user details to be saved
-      //     const userDetails = {
-      //       email: userData.getEmail(),
-      //       token: userData.getAccessToken(),
-      //       provider: provider,
-      //       name: userData.getName(),
-      //       username: userData.getNickname(),
-      //       provider_id: userData.getId(),
-      //       avatar: userData.getAvatar()
-      //     }
+    // const authUser = await User.query()
+    //   .where({ provider: params.provider })
+    //   .where({ provider_id: userData.getId() })
+    //   .first()
+    // const authUser = await Database.from('users')
+    //   .where('provider', params.provider)
+    //   .where('provider_id', userData.getId())
+    //   .first()
 
-      //     const user = await User.create(userDetails)
-      //     await auth.login(user)
-      //     return response.redirect('/')
-      //   }
-      // }
-    } catch (error) {
-      return 'Incapaz de autenticar. Tente mais tarde'
-    }
+    // return response.send(authUser)
+
+    // return authUser
+
+    // if (!(authUser === null)) {
+    //   await auth.loginViaId(authUser.id)
+    //   return response.redirect('/')
+    // } else {
+    //   if (!(userData.getEmail() === null)) {
+    //     // search for existing user by email
+    //     const whereClause = {
+    //       email: userData.getEmail()
+    //     }
+
+    //     const userDb = await User.find(whereClause)
+    //     if (userDb) {
+    //       await auth.login(userDb)
+    //       return response.redirect('/')
+    //     }
+
+    //     // user details to be saved
+    //     const userDetails = {
+    //       email: userData.getEmail(),
+    //       token: userData.getAccessToken(),
+    //       provider: provider,
+    //       name: userData.getName(),
+    //       username: userData.getNickname(),
+    //       provider_id: userData.getId(),
+    //       avatar: userData.getAvatar()
+    //     }
+
+    //     const user = await User.create(userDetails)
+    //     await auth.login(user)
+    //     return response.redirect('/')
+    //   }
+    // }
+    // } catch (error) {
+    //   return 'Incapaz de autenticar. Tente mais tarde'
+    // }
   }
 
   async logout ({ auth, response }) {
