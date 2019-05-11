@@ -64,13 +64,11 @@ class LoginController {
       provider_id: idUser
     }
 
-    return response.send(whereClause)
+    const authSaved = await User.findBy(whereClause)
+
+    return response.send(whereClause, authSaved)
 
     // const authSaved = await Database.from('users')
-    //   .where({ provider: params.provider })
-    //   .where({ provider_id: idUser })
-    //   .first()
-    // const authSaved = await User.query()
     //   .where({ provider: params.provider })
     //   .where({ provider_id: idUser })
     //   .first()
