@@ -64,7 +64,7 @@ class LoginController {
       //   })
       //   .first()
 
-      return response.send(params.provider, userData.getId())
+      return response.send(userData)
 
       // return authUser
 
