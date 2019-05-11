@@ -56,25 +56,38 @@ class LoginController {
   async callback ({ params, ally, auth, response }) {
     const provider = params.provider
 
-    const userData = await ally.driver(provider).getUser()
-    const idUser = userData.getId()
+    try {
+      const userData = await ally.driver(provider).getUser()
+      const idUser = userData.getId()
 
-    const whereClause = {
-      provider: params.provider,
-      provider_id: idUser
-    }
+      const authSaved = await Database.from('users')
+        .where({ provider: params.provider })
+        .where({ provider_id: idUser })
+        .first()
 
-    // const authSaved = await User.findBy(whereClause)
+      if (authSaved || authSaved === null) {
+        return 'Usuario já existe no banco é só logar o cara na sessao'
+        //   await auth.loginViaId(authSaved.id)
+        //   return response.redirect('/')
+      } else {
+        // user details to be saved
+        const userDetails = {
+          email: userData.getEmail(),
+          token: userData.getAccessToken(),
+          provider: provider,
+          name: userData.getName(),
+          username: userData.getNickname(),
+          provider_id: userData.getId(),
+          avatar: userData.getAvatar()
+        }
 
-    const authSaved = await Database.from('users')
-      .where({ provider: params.provider })
-      .where({ provider_id: idUser })
-      .first()
-
-    if (authSaved || authSaved === null) {
-      return 'Usuario já existe no banco é só logar o cara na sessao'
-    } else {
-      return 'Usuario não existe no banco tem que cadastrar'
+        const user = await User.create(userDetails)
+        await auth.login(user)
+        return response.redirect('/')
+        // return 'Usuario não existe no banco tem que cadastrar'
+      }
+    } catch (error) {
+      return 'Incapaz de autenticar. Tente mais tarde'
     }
 
     // return response.send(whereClause, authSaved)
