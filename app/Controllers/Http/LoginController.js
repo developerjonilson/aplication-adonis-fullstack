@@ -58,15 +58,15 @@ class LoginController {
       const userData = await ally.driver(provider).getUser()
 
       // const userId = userData.id
-      const userDetails = {
-        email: userData.getEmail(),
-        token: userData.getAccessToken(),
-        provider: provider,
-        name: userData.getName(),
-        username: userData.getNickname(),
-        provider_id: userData.getId(),
-        avatar: userData.getAvatar()
-      }
+      // const userDetails = {
+      //   email: userData.getEmail(),
+      //   token: userData.getAccessToken(),
+      //   provider: provider,
+      //   name: userData.getName(),
+      //   username: userData.getNickname(),
+      //   provider_id: userData.getId(),
+      //   avatar: userData.getAvatar()
+      // }
 
       // const authUser = await User.query()
       //   .where({
@@ -74,8 +74,14 @@ class LoginController {
       //     provider_id: userData.getId()
       //   })
       //   .first()
+      console.log(userData.getId())
 
-      return response.send(userDetails)
+      const authUser = await User.query()
+        .where({ provider: params.provider })
+        .where({ provider_id: userData.getId() })
+        .first()
+
+      return response.send(authUser)
 
       // return authUser
 
