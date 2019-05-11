@@ -56,8 +56,9 @@ class LoginController {
     const provider = params.provider
 
     const userData = await ally.driver(provider).getUser()
+    const idUser = userData.getId()
 
-    console.log(userData.getId())
+    console.log(idUser)
 
     // const authSaved = await Database.from('users')
     //   .where({ provider: params.provider })
@@ -65,7 +66,7 @@ class LoginController {
     //   .first()
     const authSaved = await User.query()
       .where({ provider: params.provider })
-      .where({ provider_id: userData.getId() })
+      .where({ provider_id: idUser })
       .first()
 
     return response.send(authSaved)
